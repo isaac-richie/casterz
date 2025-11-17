@@ -8,6 +8,7 @@ import { useAlertNotifications } from '@/hooks/useAlertNotifications'
  */
 export function AlertNotificationProvider({ children }: { children: React.ReactNode }) {
   // This hook will automatically poll for triggered alerts and show notifications
+  // The hook itself handles SSR safety
   useAlertNotifications()
   
   return <>{children}</>

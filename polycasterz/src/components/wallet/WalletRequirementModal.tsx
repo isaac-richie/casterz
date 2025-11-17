@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Wallet, Zap, Shield, TrendingUp } from 'lucide-react'
 import { useActiveAccount } from 'thirdweb/react'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { SolanaConnectButton } from './SolanaConnectButton'
 import { ConnectButton } from 'thirdweb/react'
 import { client, wallets } from '@/lib/thirdweb'
 
@@ -15,19 +13,16 @@ interface WalletRequirementModalProps {
 }
 
 export function WalletRequirementModal({ isOpen, onClose }: WalletRequirementModalProps) {
-  const evmAccount = useActiveAccount()
-  const solanaWallet = useWallet()
-  const [isEVMConnected, setIsEVMConnected] = useState(false)
-  const [isSolanaConnected, setIsSolanaConnected] = useState(false)
+  const account = useActiveAccount()
+  const [isWalletConnected, setIsWalletConnected] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
-      setIsEVMConnected(!!evmAccount?.address)
-      setIsSolanaConnected(solanaWallet.connected && !!solanaWallet.publicKey)
+      setIsWalletConnected(!!account?.address)
     }, 0)
-  }, [evmAccount, solanaWallet.connected, solanaWallet.publicKey])
+  }, [account])
 
-  const isAnyWalletConnected = isEVMConnected || isSolanaConnected
+  const isAnyWalletConnected = isWalletConnected
 
   // Auto-close when wallet is connected
   useEffect(() => {
@@ -93,11 +88,7 @@ export function WalletRequirementModal({ isOpen, onClose }: WalletRequirementMod
               <div className="flex items-center gap-2 text-green-800 dark:text-green-200">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 <span className="font-medium">
-                  {isEVMConnected && isSolanaConnected
-                    ? 'Both wallets connected!'
-                    : isEVMConnected
-                    ? 'EVM wallet connected!'
-                    : 'Solana wallet connected!'}
+                  Wallet connected!
                 </span>
               </div>
             </div>
@@ -107,25 +98,7 @@ export function WalletRequirementModal({ isOpen, onClose }: WalletRequirementMod
           <div className="space-y-3">
             <div>
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Connect Solana Wallet (Recommended)
-              </p>
-              <SolanaConnectButton className="w-full" />
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-300 dark:border-gray-600" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">
-                  Or
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Connect EVM Wallet
+                Connect Wallet (EVM or Solana)
               </p>
               <ConnectButton
                 client={client}
@@ -133,15 +106,15 @@ export function WalletRequirementModal({ isOpen, onClose }: WalletRequirementMod
                 theme="dark"
                 connectModal={{
                   size: "wide",
-                  title: "Connect EVM Wallet",
+                  title: "Connect Wallet",
                   showThirdwebBranding: false,
                   welcomeScreen: {
                     title: "Welcome to PolyCaster",
-                    subtitle: "Connect with email or EVM wallet",
+                    subtitle: "Connect with email or wallet (EVM or Solana supported)",
                   },
                 }}
                 connectButton={{
-                  label: "Connect EVM Wallet",
+                  label: "Connect Wallet",
                   className: "w-full polycaster-gradient hover:opacity-90 text-white font-medium px-4 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg",
                 }}
               />

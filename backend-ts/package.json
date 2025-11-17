@@ -20,7 +20,7 @@
     "ollama": "^0.5.0",
     "openai": "^6.8.1",
     "resend": "^6.4.1",
-    "thirdweb": "^5.110.4",
+    "thirdweb": "^5.112.1",
     "web3": "^4.3.0"
   },
   "devDependencies": {

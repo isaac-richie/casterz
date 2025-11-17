@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.5.0-blue)
+![Version](https://img.shields.io/badge/version-2.7.0-blue)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
 ![License](https://img.shields.io/badge/license-MIT-orange)
@@ -28,17 +28,17 @@ PolyCaster is a modern web application that provides real-time analytics and AI-
 - 📊 **Category Filtering**: Browse markets by Sports, Crypto, Politics, Tech, Science, and Culture
 - ⭐ **Watchlist**: Save up to 10 favorite markets with notes
 - 🔔 **Price Alerts**: Set alerts for price movements with email notifications
-- 🤖 **AI Analysis**: Premium institutional-grade market analysis ($0.3 USDC per analysis)
+- 🤖 **AI Analysis**: Premium institutional-grade market analysis ($0.30 USDC per analysis)
 - 💰 **ROI Calculator**: Calculate potential returns on market positions
 - 📜 **Signal History**: Track all purchased AI analysis signals
-- 💼 **Multi-Chain Web3 Integration**: EVM (Base Sepolia) & Solana wallet support via Thirdweb & Solana Wallet Adapter
+- 💼 **Unified Web3 Integration**: EVM (Base Sepolia) & Solana wallet support via Thirdweb X402 (single framework for both chains)
 - 📧 **Email Notifications**: Receive alerts via verified email addresses
 - 🎓 **Onboarding Tour**: Interactive tutorial for new users
 - 📚 **Help & FAQ**: Comprehensive documentation and support
 - 📈 **Visual Analytics**: Interactive probability bars and market statistics
 - ⚡ **Live Updates**: Recently active markets with real-time data
 - 📱 **Mobile Optimized**: Fully responsive design with touch-friendly UI
-- 🔗 **Multi-Chain Payments**: Pay with USDC on Base Sepolia (EVM) or Solana
+- 🔗 **Unified Multi-Chain Payments**: Pay with USDC on Base Sepolia (EVM) or Solana via Thirdweb X402 facilitator
 - 📊 **Enhanced Market Display**: Load More functionality for Trending, Live, and All Markets sections
 - 📈 **Market Statistics**: Total Volume tracking and display in header
 
@@ -65,13 +65,13 @@ PolyCaster is a modern web application that provides real-time analytics and AI-
 │  │  • AI Engine (market analysis)          │               │
 │  │  • Search Service (keyword matching)    │               │
 │  │  • Category Filtering (keyword-based)   │               │
-│  │  • Wallet Service (Thirdweb Web3)       │               │
+│  │  • Wallet Service (Thirdweb X402)        │               │
 │  └─────────────────────────────────────────┘               │
 │                                                             │
-│  ┌────────────┐      ┌────────────┐      ┌────────────┐  │
-│  │ Polymarket │      │  Thirdweb  │      │  Payment   │  │
-│  │  Gamma API │      │   Wallet   │      │  Gateway   │  │
-│  └────────────┘      └────────────┘      └────────────┘  │
+  │  ┌────────────┐      ┌────────────┐      ┌────────────┐  │
+  │  │ Polymarket │      │  Thirdweb   │      │  X402       │  │
+  │  │  Gamma API │      │   X402      │      │  Facilitator│  │
+  │  └────────────┘      └────────────┘      └────────────┘  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -88,8 +88,8 @@ PolyCaster is a modern web application that provides real-time analytics and AI-
 | **Frontend** | 🟢 Running | 3000 | http://localhost:3000 |
 | **Supabase** | 🟢 Connected | - | Database Active |
 | **Polymarket API** | 🟢 Connected | - | Markets Fetching |
-| **AI Engine** | 🟢 Healthy | - | Ollama Ready |
-| **Facilitator** | 🟢 Healthy | - | Thirdweb Active |
+| **AI Engine** | 🟢 Healthy | - | OpenAI gpt-4o / Ollama Fallback |
+| **Facilitator** | 🟢 Healthy | - | Thirdweb X402 (EVM + Solana) |
 
 ### **Quick Health Check**
 
@@ -128,7 +128,7 @@ The following warnings are **safe to ignore**:
 - **Tailwind CSS** - Utility-first styling
 - **shadcn/ui** - Beautiful UI components
 - **Lucide Icons** - Icon library
-- **Thirdweb 5.110+** - Web3 wallet integration & payment facilitator
+- **Thirdweb 5.110+** - Unified Web3 wallet integration & X402 payment facilitator (EVM + Solana)
 - **React 19** - Latest React features
 
 ### **Backend**
@@ -136,7 +136,8 @@ The following warnings are **safe to ignore**:
 - **TypeScript 5.3** - Type-safe server code
 - **Axios 1.6** - HTTP client for API calls
 - **tsx 4.6** - TypeScript execution with watch mode
-- **Ollama 0.5** - Local AI inference
+- **OpenAI API** - GPT-4o for AI analysis (primary)
+- **Ollama 0.5** - Local AI inference (fallback)
 
 ### **Database**
 - **Supabase** - PostgreSQL database
@@ -144,11 +145,11 @@ The following warnings are **safe to ignore**:
 - **Real-time subscriptions** - Live updates
 
 ### **Blockchain**
-- **Thirdweb SDK** - EVM wallet connection & payment facilitator
-- **Solana Wallet Adapter** - Solana wallet connection (Phantom, Solflare, etc.)
-- **WalletConnect** - Multi-wallet support (EVM)
-- **MetaMask** - Browser wallet integration (EVM)
-- **Multi-Chain Payments** - USDC transactions on Base Sepolia (EVM) and Solana
+- **Thirdweb X402 Facilitator** - Unified payment facilitator for both EVM and Solana
+- **Thirdweb SDK** - Wallet connection for EVM (MetaMask, Coinbase, Trust Wallet, In-App Wallet)
+- **Thirdweb Solana Support** - Native Solana wallet support (Phantom auto-detected)
+- **Phantom Auto-Connect** - Automatically connects Phantom to Solana when connected as EVM
+- **Multi-Chain Payments** - USDC transactions on Base Sepolia (EVM) and Solana via single facilitator
 - **Chain Tracking** - Database tracks which chain was used for each signal purchase
 
 ### **External APIs**
@@ -218,17 +219,20 @@ FRONTEND_URL=http://localhost:3000
 RESEND_API_KEY=your_resend_api_key
 EMAIL_FROM=onboarding@resend.dev
 
-# OpenAI (for AI analysis)
+# OpenAI (for AI analysis - primary)
 OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o
 
-# Blockchain (EVM - Base Sepolia)
-BASE_RPC_URL=https://sepolia.base.org
-USDC_CONTRACT_ADDRESS=0x036CbD53842c5426634e7929541eC2318f3dCF7e
+# Blockchain (EVM - BNB Chain / BSC)
+BNB_RPC_URL=https://public-bsc-mainnet.fastnode.io
+USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
 SERVER_WALLET=0x...
+MIN_PAYMENT_AMOUNT=0.3
 
-# Blockchain (Solana - Optional)
-SOLANA_SERVER_WALLET=...
-SOLANA_FACILITATOR_URL=... (optional, for X402 payments)
+# Blockchain (Solana - Thirdweb X402)
+SOLANA_SERVER_WALLET=... (Solana facilitator wallet address)
+# Note: Thirdweb X402 facilitator handles both EVM and Solana payments
+# Note: BNB Chain USDC uses 18 decimals (not 6!)
 ```
 
 ### **Run the Application**
@@ -403,7 +407,7 @@ cat polycasterz/.env.local | grep API_URL
 - **Recommendations**: BUY/SELL/HOLD with confidence scores
 - **Price Targets**: Fair value estimates with methodology
 - **Risk Levels**: LOW/MEDIUM/HIGH assessment
-- **Payment**: $0.3 USDC per analysis via Thirdweb facilitator (EVM) or Solana SPL Token transfers
+- **Payment**: $0.30 USDC per analysis via Thirdweb X402 facilitator (EVM or Solana)
 - **History**: Track all purchased signals (`/history`)
 
 ### **7. ROI Calculator** 💰
@@ -423,12 +427,14 @@ cat polycasterz/.env.local | grep API_URL
 - Detailed signal cards with full analysis
 - Export capabilities (coming soon)
 
-### **9. Multi-Chain Web3 & Authentication** 💼
-- **EVM Wallets**: MetaMask, WalletConnect, Coinbase Wallet, Trust Wallet (via Thirdweb)
-- **Solana Wallets**: Phantom, Solflare, Magic Eden, Leap Wallet, Pontem (via Solana Wallet Adapter)
+### **9. Unified Multi-Chain Web3 & Authentication** 💼
+- **EVM Wallets**: MetaMask, Coinbase Wallet, Trust Wallet, In-App Wallet (via Thirdweb)
+- **Solana Wallets**: Phantom (auto-detected), other Solana wallets (via Thirdweb)
+- **Phantom Auto-Connect**: Automatically connects Phantom to Solana when connected as EVM
+- **Manual Solana Connect**: Button to manually connect Phantom to Solana if needed
 - **Email Login**: Thirdweb In-App Wallet (EVM)
 - **Social Login**: Google, Apple, Facebook (via Thirdweb)
-- **Multi-Chain Payments**: Pay with USDC on Base Sepolia (EVM) or Solana
+- **Unified Payments**: Thirdweb X402 facilitator handles both EVM and Solana payments
 - **Chain Detection**: Automatic detection of wallet type (EVM vs Solana)
 - **Chain Tracking**: Database tracks which chain was used for each signal purchase
 - **Email verification** for notifications
@@ -634,7 +640,7 @@ DELETE http://localhost:8000/alerts/:id
 
 ### **Payment & Facilitator**
 ```bash
-# Settle payment via Thirdweb facilitator (EVM) or Solana facilitator
+# Settle payment via Thirdweb X402 facilitator (EVM or Solana)
 POST http://localhost:8000/api/payment/settle
 Body: {
   "resourceUrl": "...",
@@ -656,12 +662,12 @@ GET http://localhost:8000/api/payment/methods?chain=solana
 - Logo and branding with improved visibility
 - Search bar with real-time filtering
 - Category navigation (8+ categories)
-- Multi-chain wallet connection (EVM via Thirdweb, Solana via Wallet Adapter)
-- Market statistics display (Total Markets, Total Volume)
+- Unified wallet connection (EVM & Solana via Thirdweb)
+- Market statistics display (Total Markets)
 - Navigation menu (Watchlist, Alerts, History, FAQ)
 - Notification badge on Alerts icon
 - Help button with tour restart
-- Pro features dropdown (Coming Soon modal)
+- Pro features dropdown (Points & Rewards - Coming Soon)
 
 ### **Market Card (Full)**
 - Market question and description
@@ -683,8 +689,10 @@ GET http://localhost:8000/api/payment/methods?chain=solana
 - Quick analyze button
 
 ### **AI Facilitator Modal**
-- Multi-chain wallet connection prompt (EVM or Solana)
-- Payment processing ($0.3 USDC) via EVM (Base Sepolia) or Solana
+- Unified wallet connection prompt (EVM or Solana via Thirdweb)
+- Payment processing ($0.30 USDC) via Thirdweb X402 facilitator (EVM or Solana)
+- Phantom auto-connect to Solana when connected as EVM
+- Manual "Connect Solana" button for Phantom users
 - Automatic chain detection based on connected wallet
 - Premium analysis display with 11 detailed sections
 - Executive summary, market context, fundamental/technical analysis
@@ -715,7 +723,7 @@ GET http://localhost:8000/api/payment/methods?chain=solana
 - Signal statistics dashboard
 - Detailed signal cards with chain badges (EVM/Solana)
 - Full analysis display
-- Total spent calculation (0.3 USDC per signal)
+- Total spent calculation ($0.30 USDC per signal)
 
 ### **Help/FAQ Page** (`/help`)
 - Search functionality
@@ -761,7 +769,7 @@ PolyCaster/
     │   │   ├── polymarket.ts # Polymarket API service
     │   │   ├── ai-engine.ts  # AI analysis service
     │   │   ├── database.ts   # Supabase database service
-    │   │   ├── facilitator.ts # Thirdweb payment facilitator
+    │   │   ├── facilitator.ts # Thirdweb X402 payment facilitator (EVM + Solana)
     │   │   ├── alert-checker.ts # Background alert monitoring
     │   │   └── email.ts   # Resend email service
     │   └── types/        # TypeScript types
@@ -799,8 +807,8 @@ PolyCaster/
 **Backend Services (`backend-ts/src/services/`):**
 - `DatabaseService` - Supabase database operations
 - `PolymarketService` - Polymarket API integration
-- `AIEngineService` - Ollama AI analysis generation
-- `FacilitatorService` - Thirdweb payment processing
+- `AIEngineService` - OpenAI GPT-4o AI analysis generation (Ollama fallback)
+- `FacilitatorService` - Thirdweb X402 payment processing (EVM + Solana)
 - `AlertCheckerService` - Background price alert monitoring
 - `EmailService` - Resend email delivery
 
@@ -863,8 +871,8 @@ npm start
 - ✅ `BASE_RPC_URL` - Base Sepolia RPC endpoint
 - ✅ `USDC_CONTRACT_ADDRESS` - USDC contract on Base Sepolia
 - ✅ `SERVER_WALLET` - EVM server wallet address (Base Sepolia)
-- ✅ `SOLANA_SERVER_WALLET` - Solana server wallet address (optional)
-- ✅ `SOLANA_FACILITATOR_URL` - Solana X402 facilitator URL (optional)
+- ✅ `SOLANA_SERVER_WALLET` - Solana server wallet address (for Thirdweb X402)
+- ✅ `OPENAI_MODEL` - OpenAI model (default: gpt-4o)
 
 ### **Production Checklist**
 
@@ -881,7 +889,7 @@ npm start
 
 ## 📈 **Roadmap**
 
-### **✅ Completed (v2.5.0) - FREE TIER - 100% Complete**
+### **✅ Completed (v2.7.0) - FREE TIER - 100% Complete**
 - ✅ Next.js 16 frontend with TypeScript
 - ✅ TypeScript backend with Express.js
 - ✅ Real-time market search with debouncing
@@ -906,6 +914,11 @@ npm start
 - ✅ Performance optimizations (React Query caching)
 - ✅ Smart notification system
 - ✅ Brand visibility improvements
+- ✅ Unified Thirdweb X402 facilitator (EVM + Solana)
+- ✅ Phantom auto-connect to Solana
+- ✅ OpenAI GPT-4o integration (primary AI model)
+- ✅ Updated analysis fee to $0.30 USDC
+- ✅ Removed PayAI facilitator (migrated to Thirdweb X402)
 
 ### **🚧 In Progress / Planned (v3.0) - PRO TIER**
 - 📝 Portfolio Tracking
@@ -1024,10 +1037,11 @@ MIT License - See [LICENSE](LICENSE) file for details
 ## 🙏 **Acknowledgments**
 
 - **Polymarket** - Real-time prediction market data
-- **Thirdweb** - Web3 wallet infrastructure & payment facilitator
+- **Thirdweb** - Unified Web3 wallet infrastructure & X402 payment facilitator (EVM + Solana)
 - **Supabase** - PostgreSQL database with Row Level Security
 - **Resend** - Email delivery service
-- **Ollama** - Local AI inference for market analysis
+- **OpenAI** - GPT-4o AI model for market analysis (primary)
+- **Ollama** - Local AI inference for market analysis (fallback)
 - **Vercel** - Frontend hosting
 - **Next.js Team** - Amazing framework
 
@@ -1053,7 +1067,10 @@ MIT License - See [LICENSE](LICENSE) file for details
 - Search is debounced (500ms) to avoid overwhelming the API
 - Markets are fetched in batches (default 20, max 150)
 - Category filters use keyword matching for speed
-- AI analysis requires payment ($0.20 USDC) to prevent abuse
+- AI analysis requires payment ($0.30 USDC) to prevent abuse
+- OpenAI GPT-4o used for primary AI analysis (Ollama as fallback)
+- Thirdweb X402 facilitator handles both EVM and Solana payments
+- Phantom wallet automatically connects to Solana when connected as EVM
 - React Query caching (5min stale time) reduces API calls by 70%
 - Alert polling only runs when tab is visible (Tab Visibility API)
 - Manual refresh buttons give users control over data updates

@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { ThirdwebProvider } from "thirdweb/react";
+import { ThirdwebProviderWrapper } from "@/components/ThirdwebProviderWrapper";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AlertNotificationProvider } from "@/components/alert-notification-provider";
-import { SolanaWalletProvider } from "@/components/wallet/SolanaWalletProvider";
 // import { OnboardingProvider } from "@/components/onboarding/OnboardingProvider";
-import { Footer } from "@/components/layout/Footer";
-import { ScrollRestoration } from "@/components/ScrollRestoration";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,19 +40,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-            <ThirdwebProvider>
-              <SolanaWalletProvider>
-                <Providers>
-                  <AlertNotificationProvider>
-                    {/* <OnboardingProvider> */}
-                      <ScrollRestoration />
-                      {children}
-                      <Footer />
-                    {/* </OnboardingProvider> */}
-                  </AlertNotificationProvider>
-                </Providers>
-              </SolanaWalletProvider>
-            </ThirdwebProvider>
+            <ThirdwebProviderWrapper>
+              <Providers>
+                {children}
+              </Providers>
+            </ThirdwebProviderWrapper>
           </ThemeProvider>
         </body>
       </html>

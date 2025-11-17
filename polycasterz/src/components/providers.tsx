@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { ToastProvider } from '@/components/ui/toast'
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  // Use useState with lazy initialization to avoid setState in effect
+  const [mounted] = useState(() => typeof window !== 'undefined')
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -19,6 +21,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
         },
       })
   )
+
+  // During SSR or before mount, render children without providers
+  // This prevents React context errors during static generation
+  if (!mounted) {
+    return <>{children}</>
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

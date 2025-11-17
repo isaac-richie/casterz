@@ -21,7 +21,8 @@ import {
   Award
 } from 'lucide-react'
 import Link from 'next/link'
-import { SolanaConnectButton } from '@/components/wallet/SolanaConnectButton'
+import { ConnectButton } from 'thirdweb/react'
+import { client, wallets } from '@/lib/thirdweb'
 import { RobotLogo } from '@/components/ui/RobotLogo'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { MARKET_CATEGORIES, SORT_OPTIONS } from '@/lib/constants'
@@ -219,32 +220,35 @@ export function MarketHeader({
 
           {/* Navigation Buttons - Desktop */}
           <div className="hidden lg:flex items-center space-x-2">
-            <Link href="/help">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
-              >
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
+            >
+              <Link href="/help">
                 <BookOpen className="w-4 h-4" />
                 <span className="hidden xl:inline">FAQ</span>
-              </Button>
-            </Link>
-            <Link href="/watchlist" data-onboarding="watchlist">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
-              >
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
+            >
+              <Link href="/watchlist" data-onboarding="watchlist">
                 <Star className="w-4 h-4" />
                 <span className="hidden xl:inline">Watchlist</span>
-              </Button>
-            </Link>
-            <Link href="/alerts" data-onboarding="alerts">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 relative text-sm"
-              >
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 relative text-sm"
+            >
+              <Link href="/alerts" data-onboarding="alerts">
                 <Bell className="w-4 h-4" />
                 <span className="hidden xl:inline">Alerts</span>
                 {triggeredCount > 0 && (
@@ -252,18 +256,19 @@ export function MarketHeader({
                     {triggeredCount > 9 ? '9+' : triggeredCount}
                   </span>
                 )}
-              </Button>
-            </Link>
-            <Link href="/history">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
-              >
+              </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 text-sm"
+            >
+              <Link href="/history">
                 <History className="w-4 h-4" />
                 <span className="hidden xl:inline">History</span>
-              </Button>
-            </Link>
+              </Link>
+            </Button>
             
             {/* Pro Features Dropdown */}
             <DropdownMenu>
@@ -304,7 +309,24 @@ export function MarketHeader({
               <HelpButton onStartTour={onboardingContext.startTour} />
             )} */}
             <div className="hidden xl:block" data-onboarding="wallet">
-              <SolanaConnectButton />
+              <ConnectButton
+                client={client}
+                wallets={wallets}
+                theme="dark"
+                connectModal={{
+                  size: "compact",
+                  title: "Connect Wallet",
+                  showThirdwebBranding: false,
+                  welcomeScreen: {
+                    title: "Welcome to PolyCaster",
+                    subtitle: "Connect with email or wallet (EVM or Solana supported)",
+                  },
+                }}
+                connectButton={{
+                  label: "Connect",
+                  className: "polycaster-gradient hover:opacity-90 text-white font-medium px-3 py-1.5 text-sm rounded-lg transition-all duration-200 shadow-md hover:shadow-lg",
+                }}
+              />
             </div>
           </div>
 
@@ -442,7 +464,24 @@ export function MarketHeader({
 
               <div className="pt-2 border-t border-white/10 px-2">
                 <div className="w-full">
-                  <SolanaConnectButton className="w-full" />
+                  <ConnectButton
+                    client={client}
+                    wallets={wallets}
+                    theme="dark"
+                    connectModal={{
+                      size: "compact",
+                      title: "Connect Wallet",
+                      showThirdwebBranding: false,
+                      welcomeScreen: {
+                        title: "Welcome to PolyCaster",
+                        subtitle: "Connect with email or wallet (EVM or Solana supported)",
+                      },
+                    }}
+                    connectButton={{
+                      label: "Connect Wallet",
+                      className: "w-full polycaster-gradient hover:opacity-90 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg",
+                    }}
+                  />
                 </div>
               </div>
             </div>

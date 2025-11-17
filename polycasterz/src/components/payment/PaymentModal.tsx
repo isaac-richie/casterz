@@ -154,7 +154,7 @@ export function PaymentModal({
                   </span>
                 </div>
                 <Badge variant="outline" className="text-xs">
-                  {getShortAddress(address || undefined)}
+                  {getShortAddress(address || null)}
                 </Badge>
               </div>
 

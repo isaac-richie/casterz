@@ -21,10 +21,10 @@ export const config = {
   // AI Configuration
   OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
 
-  // Base Chain Configuration
-  BASE_RPC_URL: process.env.BASE_RPC_URL || 'https://sepolia.base.org',
-  USDC_CONTRACT_ADDRESS: process.env.USDC_CONTRACT_ADDRESS || '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
-  MIN_PAYMENT_AMOUNT: parseFloat(process.env.MIN_PAYMENT_AMOUNT || '0.5')
+  // BNB Chain Configuration
+  BNB_RPC_URL: process.env.BNB_RPC_URL || 'https://public-bsc-mainnet.fastnode.io',
+  USDC_CONTRACT_ADDRESS: process.env.USDC_CONTRACT_ADDRESS || '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+  MIN_PAYMENT_AMOUNT: parseFloat(process.env.MIN_PAYMENT_AMOUNT || '0.3')
 }
 
 

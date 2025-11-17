@@ -51,27 +51,32 @@ const result = await settlePayment({
 
 ## **2. Solana** 🟣
 
-### **Framework: PayAI Facilitator**
+### **Framework: Thirdweb X402 Facilitator**
 
-**Location**: `backend-ts/src/services/solana-facilitator.ts`
+**Location**: `backend-ts/src/services/facilitator.ts`
 
-**API Endpoint**: `https://facilitator.payai.network`
+**Package**: `thirdweb/x402`
 
 **Implementation**:
 ```typescript
-// Call PayAI Facilitator API
-const response = await fetch(`${this.facilitatorUrl}/settle`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    resourceUrl,
-    paymentData,
-    price,
-    payTo: this.serverWallet,
-    chain: 'solana',
-  }),
+import { facilitator, settlePayment } from 'thirdweb/x402'
+
+// Create Solana facilitator instance
+this.solanaFacilitator = facilitator({
+  client: this.client,
+  serverWalletAddress: solanaServerWallet || '',
+  waitUntil: 'confirmed',
+})
+
+// Settle payment
+const result = await settlePayment({
+  resourceUrl,
+  method: 'GET',
+  paymentData,
+  payTo: process.env.SOLANA_SERVER_WALLET,
+  network: 'solana', // Solana is specified as a string
+  price,
+  facilitator: this.solanaFacilitator,
 })
 ```
 
@@ -79,10 +84,10 @@ const response = await fetch(`${this.facilitatorUrl}/settle`, {
 - **Chain**: Solana Mainnet
 - **Token**: USDC (`EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`)
 - **Price**: $0.20 (200,000 with 6 decimals)
-- **API Key**: Not required (public endpoint)
+- **Credentials**: `THIRDWEB_SECRET_KEY` or `NEXT_PUBLIC_THIRDWEB_CLIENT_ID`
 - **Server Wallet**: `SOLANA_SERVER_WALLET` environment variable
 
-**Documentation**: [PayAI Facilitator](https://facilitator.payai.network)
+**Documentation**: [Thirdweb X402 Solana Support](https://portal.thirdweb.com/x402)
 
 ---
 
@@ -156,13 +161,14 @@ NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id
 SERVER_WALLET_ADDRESS=0xYourEVMWalletAddress
 ```
 
-### **Solana (PayAI)**
+### **Solana (Thirdweb)**
 ```env
 # Required
-SOLANA_SERVER_WALLET=YourSolanaWalletAddress
+THIRDWEB_SECRET_KEY=your_secret_key
+# OR
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id
 
-# Optional
-SOLANA_FACILITATOR_URL=https://facilitator.payai.network
+SOLANA_SERVER_WALLET=YourSolanaWalletAddress
 ```
 
 ---
@@ -172,7 +178,7 @@ SOLANA_FACILITATOR_URL=https://facilitator.payai.network
 | Chain | Facilitator Framework | Status | Used in Flow? |
 |-------|----------------------|--------|---------------|
 | **EVM** | Thirdweb X402 | ✅ Configured | ❌ Not used (direct transfers) |
-| **Solana** | PayAI Facilitator | ✅ Configured | ❌ Not used (direct transfers) |
+| **Solana** | Thirdweb X402 | ✅ Configured | ❌ Not used (direct transfers) |
 
 **Current Implementation**: Direct on-chain token transfers with backend verification
 
@@ -181,6 +187,6 @@ SOLANA_FACILITATOR_URL=https://facilitator.payai.network
 ---
 
 **Last Updated**: Today  
-**Status**: ✅ Frameworks configured, direct transfers in use
+**Status**: ✅ Unified Thirdweb X402 facilitator for both EVM and Solana, direct transfers in use
 
 

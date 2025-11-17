@@ -81,24 +81,26 @@ export function HeroSection({ onSkip }: HeroSectionProps) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-4 sm:px-0"
           >
-            <Link href="#markets" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="polycaster-gradient hover:opacity-90 text-white w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
-              >
+            <Button
+              size="lg"
+              asChild
+              className="polycaster-gradient hover:opacity-90 text-white w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+            >
+              <Link href="#markets" className="w-full sm:w-auto">
                 Explore Markets
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-              </Button>
-            </Link>
-            <Link href="#features" className="w-full sm:w-auto">
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400"
-              >
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              asChild
+              className="w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg font-semibold border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400"
+            >
+              <Link href="#features" className="w-full sm:w-auto">
                 Learn More
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </motion.div>
 
           {/* Feature highlights */}

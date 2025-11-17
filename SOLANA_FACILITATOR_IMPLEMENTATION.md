@@ -10,11 +10,11 @@ Successfully added Solana X402 payment facilitator support alongside existing Th
 
 ## 📁 Files Created/Modified
 
-### ✅ New Files
-1. **`backend-ts/src/services/solana-facilitator.ts`**
-   - New Solana facilitator service using PayAI Facilitator
-   - Completely isolated from existing EVM code
-   - Returns mock responses if not configured (safe fallback)
+### ✅ Updated Implementation
+1. **`backend-ts/src/services/facilitator.ts`**
+   - Now uses Thirdweb X402 facilitator for both EVM and Solana
+   - Unified facilitator framework for both chains
+   - Solana facilitator uses `solana` chain from `thirdweb/chains`
 
 ### ✅ Modified Files
 1. **`backend-ts/src/services/facilitator.ts`**
@@ -108,11 +108,15 @@ Add to `backend-ts/.env` **only if you want to enable Solana payments**:
 
 ```bash
 # Solana Facilitator (Optional - only if using Solana payments)
-SOLANA_FACILITATOR_URL=https://facilitator.payai.network
+# Uses Thirdweb X402 facilitator (same as EVM)
+THIRDWEB_SECRET_KEY=your_thirdweb_secret_key
+# OR
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_thirdweb_client_id
+
 SOLANA_SERVER_WALLET=your_solana_wallet_address_here
 ```
 
-**Note**: If these are not set, Solana payments will return mock responses and won't break anything.
+**Note**: If `SOLANA_SERVER_WALLET` is not set, Solana payments will be disabled. The same Thirdweb credentials used for EVM work for Solana.
 
 ---
 
@@ -179,7 +183,7 @@ curl -X POST http://localhost:8000/api/payment/settle \
        ▼               ▼
 ┌──────────────┐  ┌──────────────────┐
 │ EVM          │  │ Solana           │
-│ (Thirdweb)   │  │ (PayAI)          │
+│ (Thirdweb)   │  │ (Thirdweb)       │
 │              │  │                  │
 │ - baseSepolia│  │ - Solana Mainnet │
 │ - USDC       │  │ - USDC (SPL)     │
@@ -190,8 +194,9 @@ curl -X POST http://localhost:8000/api/payment/settle \
 
 ## ✅ Implementation Checklist
 
-- [x] Create `solana-facilitator.ts` service
-- [x] Update `facilitator.ts` with chain routing
+- [x] Migrate from PayAI to Thirdweb X402 for Solana
+- [x] Update `facilitator.ts` to use unified Thirdweb facilitator
+- [x] Remove PayAI dependency (`solana-facilitator.ts`)
 - [x] Update API endpoints with optional chain parameter
 - [x] Fix TypeScript compilation errors
 - [x] Verify build succeeds
@@ -216,11 +221,11 @@ curl -X POST http://localhost:8000/api/payment/settle \
 
 ## 📝 Notes
 
-- **PayAI Facilitator** is used for Solana (no API keys required)
-- **Thirdweb X402** continues to be used for EVM (Base Sepolia)
+- **Thirdweb X402 Facilitator** is now used for both EVM and Solana (unified framework)
+- Same Thirdweb credentials work for both chains
 - Both facilitators can run simultaneously
 - Chain selection is **optional** - defaults to EVM for backward compatibility
-- Solana support can be **enabled/disabled** via environment variables
+- Solana support can be **enabled/disabled** via `SOLANA_SERVER_WALLET` environment variable
 
 ---
 

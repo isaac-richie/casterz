@@ -10,6 +10,7 @@ const POLL_INTERVAL = 30000 // 30 seconds
 const SEEN_ALERTS_KEY = 'polycaster_seen_alerts'
 
 export function useAlertNotifications() {
+  // Safe to call useActiveAccount - it handles SSR internally
   const account = useActiveAccount()
   const [triggeredAlerts, setTriggeredAlerts] = useState<PriceAlert[]>([])
   const [triggeredCount, setTriggeredCount] = useState(0)
@@ -78,7 +79,7 @@ export function useAlertNotifications() {
         })
 
         // Show toast notifications ONLY for unseen alerts (first time) AND only if there are any
-        if (unseenAlerts.length > 0) {
+        if (unseenAlerts.length > 0 && addToast) {
           unseenAlerts.forEach((alert) => {
             const conditionText = alert.condition === 'above' ? 'above' : 
                                  alert.condition === 'below' ? 'below' : 'equals'
@@ -113,7 +114,7 @@ export function useAlertNotifications() {
       setIsPolling(false)
       hasCheckedInitialRef.current = true
     }
-  }, [account?.address, isPolling, addToast, getSeenAlertIds, markAlertAsSeen])
+  }, [account?.address, isPolling, getSeenAlertIds, markAlertAsSeen, addToast])
 
   // Poll for triggered alerts (only when tab is visible)
   useEffect(() => {

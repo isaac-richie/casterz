@@ -55,32 +55,39 @@ Complete list of all environment variables required for backend deployment on Ve
 
 ---
 
-### 💳 **EVM Payment (Thirdweb - Base Sepolia)**
+### 💳 **EVM Payment (Thirdweb - BNB Chain / BSC)**
 
 | Variable | Required | Description | Example |
 |----------|----------|-------------|---------|
 | `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` | ✅ Yes | Thirdweb client ID (public) | `your_client_id` |
 | `THIRDWEB_SECRET_KEY` | ✅ Yes | Thirdweb secret key (private) | `your_secret_key` |
 | `SERVER_WALLET_ADDRESS` | ✅ Yes | EVM wallet address to receive payments | `0x2983D066D42a79295dFAC0F752EA2FA7940C33dA` |
-| `BASE_RPC_URL` | ✅ Yes | Base Sepolia RPC endpoint | `https://sepolia.base.org` |
-| `USDC_CONTRACT_ADDRESS` | ⚠️ Optional | USDC contract on Base Sepolia | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` (default) |
+| `BNB_RPC_URL` | ✅ Yes | BNB Chain RPC endpoint | `https://public-bsc-mainnet.fastnode.io` |
+| `USDC_CONTRACT_ADDRESS` | ⚠️ Optional | USDC contract on BNB Chain | `0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d` (default) |
 | `PRIVATE_KEY` | ✅ Yes | Private key for server wallet (for signing) | `0x...` (keep secret!) |
+
+**Note:** 
+- BNB Chain USDC uses **18 decimals** (not 6!)
+- Payment amount: 0.3 USDC = `300000000000000000` wei
+- Chain ID: `56` (BNB Chain Mainnet)
 
 **Alternative Variable Names:**
 - `PAYMENT_RECIPIENT_WALLET` can be used instead of `SERVER_WALLET_ADDRESS`
 
 ---
 
-### 🪙 **Solana Payment**
+### 🪙 **Solana Payment (Thirdweb X402)**
 
 | Variable | Required | Description | Example |
 |----------|----------|-------------|---------|
 | `SOLANA_SERVER_WALLET` | ✅ Yes | Solana wallet address to receive payments | `YourSolanaWalletAddress...` |
 | `SOLANA_RPC_URL` | ⚠️ Optional | Solana RPC endpoint | `https://api.mainnet-beta.solana.com` (default) |
-| `SOLANA_FACILITATOR_URL` | ⚠️ Optional | PayAI Facilitator URL | `https://facilitator.payai.network` (default) |
 | `SOLANA_PRIVATE_KEY` | ⚠️ Optional | Solana private key (base58 format) | `your_base58_private_key` |
 
-**Note:** If `SOLANA_SERVER_WALLET` is not set, Solana payments will be disabled.
+**Note:** 
+- Uses the same `THIRDWEB_SECRET_KEY` or `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` as EVM payments
+- If `SOLANA_SERVER_WALLET` is not set, Solana payments will be disabled
+- Thirdweb X402 facilitator handles both EVM and Solana payments
 
 ---
 

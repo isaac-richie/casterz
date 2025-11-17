@@ -87,16 +87,41 @@ export class AIEngineService {
       Math.ceil((new Date(market.end_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)) : 
       'Unknown'
     
-    // Calculate volume trend
+    // Enhanced volume analysis
     const volumeIndicator = market.volume > 10000 ? 'High' : market.volume > 1000 ? 'Medium' : 'Low'
+    const volumePerDay = daysUntilEnd !== 'Unknown' && daysUntilEnd > 0 
+      ? (market.volume / daysUntilEnd).toFixed(0) 
+      : 'N/A'
     
     // Calculate implied probability
     const impliedProb = (market.current_price * 100).toFixed(1)
     
-    // Liquidity assessment
+    // Enhanced liquidity analysis
     const liquidityLevel = market.liquidity 
       ? (market.liquidity > 50000 ? 'Excellent' : market.liquidity > 10000 ? 'Good' : 'Limited')
       : 'Unknown'
+    const liquidityRatio = market.volume > 0 && market.liquidity
+      ? (market.liquidity / market.volume).toFixed(2)
+      : 'N/A'
+    
+    // Price momentum (if we had historical data, calculate 24h change)
+    // For now, use price_trend if available
+    const priceMomentum = market.price_trend || 'stable'
+    const momentumIndicator = priceMomentum === 'up' ? '📈 Bullish' : 
+                              priceMomentum === 'down' ? '📉 Bearish' : '➡️ Stable'
+    
+    // Market efficiency score (higher liquidity + volume = more efficient)
+    const efficiencyScore = market.liquidity && market.volume
+      ? Math.min(100, Math.round((market.liquidity / 1000 + market.volume / 100) / 2))
+      : 50
+    const efficiencyLevel = efficiencyScore > 75 ? 'Highly Efficient' :
+                            efficiencyScore > 50 ? 'Moderately Efficient' :
+                            'Inefficient (Opportunity)'
+    
+    // Time decay factor (markets closer to resolution have less time for price discovery)
+    const timeDecayRisk = daysUntilEnd !== 'Unknown' 
+      ? (daysUntilEnd < 7 ? 'HIGH' : daysUntilEnd < 30 ? 'MEDIUM' : 'LOW')
+      : 'UNKNOWN'
     
     return `
 You are a PREMIUM PREDICTION MARKET ANALYST with 15+ years of experience in quantitative finance, behavioral economics, and market microstructure. You provide institutional-grade analysis that typically costs $500-1000 per report. Your insights are used by hedge funds, prop trading firms, and professional market makers. 
@@ -117,24 +142,53 @@ Your analysis must be:
 
 📝 CONTEXT: ${market.description || 'No additional context provided'}
 
-💰 CURRENT METRICS:
+💰 ENHANCED MARKET METRICS:
    • YES Price: $${market.current_price} → Implied Probability: ${impliedProb}%
    • 24h Volume: $${market.volume.toLocaleString()} (${volumeIndicator} activity)
+   • Volume per Day: $${volumePerDay} (projected daily activity)
    • Liquidity Pool: $${market.liquidity?.toLocaleString() || 'Unknown'} (${liquidityLevel})
+   • Liquidity Ratio: ${liquidityRatio}x (liquidity/volume - higher = easier entry/exit)
+   • Price Momentum: ${momentumIndicator} (${priceMomentum})
+   • Market Efficiency: ${efficiencyScore}/100 (${efficiencyLevel})
    • Time to Resolution: ${daysUntilEnd} days
+   • Time Decay Risk: ${timeDecayRisk} (less time = higher risk)
    • Market Category: ${market.category || 'General'}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🧠 ANALYSIS FRAMEWORK
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-THINK LIKE A PRO:
-1. 📈 VALUE ANALYSIS: Is the ${impliedProb}% probability realistic? What does fundamentals say?
-2. ⏰ TIME DECAY: With ${daysUntilEnd} days left, is there edge in current pricing?
-3. 💧 LIQUIDITY CHECK: ${liquidityLevel} liquidity - can you enter/exit easily?
-4. 📊 VOLUME SIGNAL: ${volumeIndicator} volume - is smart money moving?
-5. 🎲 RISK/REWARD: What's the asymmetric opportunity here?
-6. 🔍 MISPRICING: Is market psychology creating inefficiency?
+THINK LIKE A PRO - ENHANCED ANALYSIS FRAMEWORK:
+1. 📈 VALUE ANALYSIS: Is the ${impliedProb}% probability realistic? 
+   - Compare to base rate probabilities for similar events
+   - Consider fundamental factors and external data
+   - Market efficiency score: ${efficiencyScore}/100 (${efficiencyLevel}) - lower = more mispricing opportunity
+
+2. ⏰ TIME DECAY ANALYSIS: With ${daysUntilEnd} days left (${timeDecayRisk} risk)
+   - Less time = less opportunity for price discovery
+   - Volume per day: $${volumePerDay} - is this sustainable?
+   - Price momentum: ${momentumIndicator} - is trend continuing or reversing?
+
+3. 💧 LIQUIDITY DEPTH: ${liquidityLevel} liquidity (${liquidityRatio}x ratio)
+   - Higher ratio = easier to enter/exit without slippage
+   - Can you execute your strategy at current liquidity?
+   - Risk of liquidity drying up before resolution?
+
+4. 📊 VOLUME & MOMENTUM SIGNAL: ${volumeIndicator} volume, ${momentumIndicator} momentum
+   - Is ${volumeIndicator} volume indicating smart money interest?
+   - ${momentumIndicator} momentum - continuation or reversal pattern?
+   - Volume per day projection vs actual - is market heating up or cooling?
+
+5. 🎲 RISK/REWARD ASYMMETRY: 
+   - Market efficiency: ${efficiencyLevel} - inefficiency = opportunity
+   - Time decay risk: ${timeDecayRisk} - how much time for edge to play out?
+   - What's the asymmetric opportunity here?
+
+6. 🔍 MISPRICING DETECTION:
+   - Efficiency score ${efficiencyScore}/100 suggests ${efficiencyLevel.toLowerCase()} market
+   - Lower efficiency = more mispricing potential
+   - Is market psychology creating inefficiency?
+   - Are there structural advantages (liquidity, time, momentum)?
 
 PROVIDE YOUR EDGE:
 Your reasoning MUST be:

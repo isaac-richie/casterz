@@ -36,16 +36,18 @@ EMAIL_FROM=onboarding@resend.dev
 EMAIL_FROM_NAME=PolyCaster
 ```
 
-### Payment & Blockchain (Base Sepolia) - REQUIRED
+### Payment & Blockchain (BNB Chain / BSC) - REQUIRED
 ```bash
 THIRDWEB_SECRET_KEY=your_thirdweb_secret_key
 NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_thirdweb_client_id
 SERVER_WALLET_ADDRESS=0x2983D066D42a79295dFAC0F752EA2FA7940C33dA
 PAYMENT_RECIPIENT_WALLET=0x2983D066D42a79295dFAC0F752EA2FA7940C33dA
-BASE_RPC_URL=https://sepolia.base.org
-USDC_CONTRACT_ADDRESS=0x036CbD53842c5426634e7929541eC2318f3dCF7e
-MIN_PAYMENT_AMOUNT=0.2
+BNB_RPC_URL=https://public-bsc-mainnet.fastnode.io
+USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
+MIN_PAYMENT_AMOUNT=0.3
 ```
+
+**Note:** BNB Chain USDC uses **18 decimals** (not 6!)
 
 ### External APIs - OPTIONAL (has defaults)
 ```bash
@@ -86,7 +88,7 @@ SERVER_WALLET_ADDRESS=0x2983D066D42a79295dFAC0F752EA2FA7940C33dA
 PAYMENT_RECIPIENT_WALLET=0x2983D066D42a79295dFAC0F752EA2FA7940C33dA
 BASE_RPC_URL=https://sepolia.base.org
 USDC_CONTRACT_ADDRESS=0x036CbD53842c5426634e7929541eC2318f3dCF7e
-MIN_PAYMENT_AMOUNT=0.2
+MIN_PAYMENT_AMOUNT=0.3
 POLYMARKET_API_URL=https://gamma-api.polymarket.com/markets
 FRONTEND_URL=https://your-frontend.vercel.app
 PORT=8000
@@ -148,7 +150,7 @@ NODE_ENV=production
 | `PAYMENT_RECIPIENT_WALLET` | Payment recipient wallet | ⚠️ Optional | Same as `SERVER_WALLET_ADDRESS` |
 | `BASE_RPC_URL` | Base Sepolia RPC endpoint | ⚠️ Optional | `https://sepolia.base.org` |
 | `USDC_CONTRACT_ADDRESS` | USDC on Base Sepolia | ⚠️ Optional | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |
-| `MIN_PAYMENT_AMOUNT` | Minimum payment | ⚠️ Optional | `0.2` |
+| `MIN_PAYMENT_AMOUNT` | Minimum payment | ⚠️ Optional | `0.3` |
 | `POLYMARKET_API_URL` | Polymarket API | ⚠️ Optional | `https://gamma-api.polymarket.com/markets` |
 | `FRONTEND_URL` | Frontend URL for CORS | ✅ Yes | - |
 | `PORT` | Server port | ⚠️ Optional | `8000` (Vercel sets automatically) |
