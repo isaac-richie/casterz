@@ -16,7 +16,7 @@ import { Bell, Loader2, Trash2, TrendingUp, TrendingDown, Target, Mail, RefreshC
 import { EmailSettings } from '@/components/user/EmailSettings'
 import Link from 'next/link'
 
-export default function AlertsPage() {
+function AlertsPageContent() {
   const [activeTab, setActiveTab] = useState<'active' | 'triggered' | 'cancelled'>('active')
   const [showEmailSettings, setShowEmailSettings] = useState(false)
   const { alerts, loading, error, deleteAlert, refetch } = useAlerts(activeTab)
@@ -280,5 +280,27 @@ export default function AlertsPage() {
       />
     </div>
   )
+}
+
+export default function AlertsPage() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // During SSR, render a loading state
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4 text-orange-500" />
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  return <AlertsPageContent />
 }
 
